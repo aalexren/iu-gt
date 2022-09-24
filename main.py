@@ -114,15 +114,6 @@ class Game:
         start = self.game_range[0]
         stop = self.game_range[-1]
         step = self.step_range[-1]
-        
-        # temp: list[bool] = [False] * (stop + 1)
-        # temp[stop] = True
-        
-        # idx = stop
-        # while idx - step > start:
-        #     temp[idx - step:idx] = [True] * step
-        #     logger.info(f'{idx}, {idx - step}, {len(temp)}')
-        #     idx = idx - 1 - step
 
         temp = [True] * (stop + 1)
         for i in range(stop, start - 1, -(step + 1)):
@@ -142,10 +133,6 @@ class Session:
             try:
                 mode = click.prompt('Please choose game mode:\n 1. Smart\n 2. Random\n 3. Advisor\n',
                                     type=click.IntRange(1, 3), prompt_suffix='>')
-                # game_range = click.prompt(f'Enter the game range from x to {YEAR + MONTH + DAY}', 
-                #                         type=click.IntRange(1, YEAR + MONTH + DAY))
-                # step_range = click.prompt(f'Enter game step range from x to {MONTH + DAY}',
-                #                         type=click.IntRange(1, MONTH + DAY))
                 start = click.prompt(f'Enter game start position from x to {YEAR + MONTH + DAY}',
                                         type=click.IntRange(1, YEAR + MONTH + DAY))
                 game = Game(game_range=(1, YEAR + MONTH + DAY),
