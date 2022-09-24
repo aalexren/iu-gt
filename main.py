@@ -25,7 +25,7 @@ class Game:
     def __init__(self, *, 
                 game_range: tuple[int, int]=(1, YEAR + MONTH + DAY), 
                 step_range: tuple[int, int]=(1, MONTH + DAY),
-                mode=1, start=1):
+                mode=1, start=None):
         """
         @param game_range: range of all possible positions inclusively
         @param step_range: range of every possible move inclusively
@@ -35,13 +35,14 @@ class Game:
         self.step_range = range(step_range[0], step_range[1] + 1)
         self.mode = mode
         self.moves = []
-        self.position = start
+        self.position = start if start else random.randint(1, self.game_range[-1])
         self.winner = None # 'D' or 'S'
         self.status = False # game is over
         self.turn = [1, ['D', 'S']] # by default first move for the Duplicator
 
 
     def run(self):
+        logger.info(f'Start position is {self.position}')
         self.win_positions = self.backward_induction()
         while not self.is_finish():
             self.next_turn()
@@ -143,16 +144,21 @@ class Session:
     def run(self):
         while True:
             try:
+                save_ops = {'y', 'n'}
+
                 mode = click.prompt('Please choose game mode:\n 1. Smart\n 2. Random\n 3. Advisor\n',
                                     type=click.IntRange(1, 3), prompt_suffix='>')
-                start = click.prompt(f'Enter game start position from x to {YEAR + MONTH + DAY}',
+                choose_start = click.prompt('Do you want choose start position?',
+                                            type=click.Choice(save_ops))
+                start = None
+                if choose_start == 'y':
+                    start = click.prompt(f'Enter game start position from x to {YEAR + MONTH + DAY}',
                                         type=click.IntRange(1, YEAR + MONTH + DAY))
                 game = Game(game_range=(1, YEAR + MONTH + DAY),
                             step_range=(1, MONTH + DAY),
                             mode=mode, start=start)
                 game.run()
                 
-                save_ops = {'y', 'n'}
                 save = click.prompt('Do you want to save game?', type=click.Choice(save_ops))
                 if save == 'y':
                     with open(f'log-{datetime.now().strftime("%m-%d-%Y.%H:%M:%S")}.log', 'w') as log:
