@@ -61,8 +61,8 @@ class Game:
 
     def stat(self):
         res = f'Game range: {self.game_range[0]}, Move range: {self.step_range[-1]}\n'
-        res += f'Win positions: {list(enumerate(self.win_positions))}\n'
-        res += f'Moves: {self.moves}'
+        res += f'Win positions: {list(enumerate(self.win_positions))[1:]}\n'
+        res += f'Moves: {self.moves}\n'
         res += f'Winner is {self.winner}'
         return res
 
@@ -72,6 +72,18 @@ class Game:
         return the move (in steps) of the player
         """
         
+        better_move = None
+        if self.mode == 3:
+            if self.win_positions[self.position]:
+                try:
+                    better_move = self.win_positions.index(False, self.position) - self.position
+                except ValueError:
+                    better_move = self.game_range[-1] - self.position
+                finally:
+                    logger.info(f'Better move is {better_move}')
+            else:
+                logger.info('You are not in the winning position!')
+
         move = click.prompt('Enter your move', 
                             type=click.IntRange(self.step_range[0], self.step_range[-1]))
         logger.info(f'Duplicator moved to {self.position + move} => +{move}')
@@ -94,7 +106,7 @@ class Game:
                 except ValueError:
                     move = self.game_range[-1] - self.position
             else:
-                move = 1
+                move = random.randint(self.step_range[0], self.step_range[-1])
                 
         
         logger.info(f'Spoiler moved to {self.position + move} => +{move}')
@@ -107,7 +119,7 @@ class Game:
         check if the game is over
         """
 
-        return self.position == self.game_range[-1]
+        return self.position >= self.game_range[-1]
 
 
     def backward_induction(self) -> list[bool]:
