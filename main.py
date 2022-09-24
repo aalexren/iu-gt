@@ -60,6 +60,7 @@ class Game:
         self.turn = [(self.turn[0] + 1) % len(self.turn[1]), self.turn[1]]
 
 
+    @property
     def stat(self):
         res = f'Game range: {self.game_range[0]}, Move range: {self.step_range[-1]}\n'
         res += f'Win positions: {list(enumerate(self.win_positions))[1:]}\n'
@@ -162,7 +163,7 @@ class Session:
                 save = click.prompt('Do you want to save game?', type=click.Choice(save_ops))
                 if save == 'y':
                     with open(f'log-{datetime.now().strftime("%m-%d-%Y.%H:%M:%S")}.log', 'w') as log:
-                        log.write(game.stat())
+                        log.write(game.stat)
                         logger.info('Log has been witten.')
 
                 next_game = click.prompt('Do you want to play next game?', type=click.Choice(save_ops))
