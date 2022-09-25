@@ -53,3 +53,6 @@ If you use version of python script from the moodle uploads then simply do:
 1. `pip install --upgrade pip`
 2. `pip install click`
 3. `python3 main.py`
+
+### Remark
+When you save log of the game session it means you allows the program to create a text file on you computer.
