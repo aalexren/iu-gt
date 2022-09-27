@@ -62,7 +62,7 @@ class Game:
 
     @property
     def stat(self):
-        res = f'Game range: {self.game_range[0]}, Move range: {self.step_range[-1]}\n'
+        res = f'Game range: {self.game_range[0], self.game_range[-1]}, Move range: {self.step_range[0], self.step_range[-1]}\n'
         res += f'Win positions: {list(enumerate(self.win_positions))[1:]}\n'
         res += f'Moves: {self.moves}\n'
         res += f'Winner is {self.winner}'
@@ -88,6 +88,8 @@ class Game:
 
         move = click.prompt('Enter your move', 
                             type=click.IntRange(self.step_range[0], self.step_range[-1]))
+        if move + self.position > self.game_range[-1]:
+            move = self.game_range[-1] - self.position
         logger.info(f'Duplicator moved to {self.position + move} => +{move}')
         self.moves.append(('D', f'{self.position + move}', f'{move}'))
         return move
@@ -110,7 +112,8 @@ class Game:
             else:
                 move = random.randint(self.step_range[0], self.step_range[-1])
                 
-        
+        if move + self.position > self.game_range[-1]:
+            move = self.game_range[-1] - self.position
         logger.info(f'Spoiler moved to {self.position + move} => +{move}')
         self.moves.append(('S', f'{self.position + move}', f'{move}'))
         return move
