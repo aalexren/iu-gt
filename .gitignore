@@ -1,5 +1,6 @@
 __pycache__/
 env/
 *.log
-.DS_Store
+*.DS_Store
 *.pdf
+.gitignore
