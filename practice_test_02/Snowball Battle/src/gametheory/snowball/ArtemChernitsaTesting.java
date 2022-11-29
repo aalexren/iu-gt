@@ -9,10 +9,10 @@ public class ArtemChernitsaTesting {
     private Random rand;
 
     public ArtemChernitsaTesting() {
-        Agent a1 = new Agent(new NaiveAgent());
-        Agent a2 = new Agent(new OptimalAgent());
+        // Agent aOne = new Agent(new AggressiveAgent());
+        // Agent aTwo = new Agent(new NaiveAgent());
 
-        // playMatch(a1, a2);
+        // playMatch(aOne, aTwo);
 
         agents = new ArrayList<>();
 
@@ -30,12 +30,14 @@ public class ArtemChernitsaTesting {
         }
     }
 
+    /*
+     * Each play with each, except itself.
+     */
     private void runTournament() {
         for (int i = 0; i < agents.size(); ++i) {
             for (int j = 0; j < agents.size(); ++j) {
                 if (i != j) {
                     playMatch(agents.get(i), agents.get(j));
-                    // conductSnowBattle(agents.get(i), agents.get(j));
                 }
                 agents.get(i).agent.reset();
                 agents.get(j).agent.reset();
@@ -44,15 +46,15 @@ public class ArtemChernitsaTesting {
     }
 
     private void generatePlayers() {
-        for (int i = 0; i < 60; ++i) {
-            int player = rand.nextInt(4);
-            if (player == 0) {
-                agents.add(new Agent(new RandomAgent()));
-            }
+        for (int i = 0; i < 8; ++i) {
+            int player = rand.nextInt(4)%3 + 1;
+            // if (player == 0) {
+            //     agents.add(new Agent(new RandomAgent()));
+            // }
             if (player == 1) {
                 agents.add(new Agent(new OptimalAgent()));
             }
-            if (player == 2) {
+            if (i < 3) { //player == 2 || i < 4) {
                 agents.add(new Agent(new AggressiveAgent()));
             }
             if (player == 3) {
@@ -61,7 +63,7 @@ public class ArtemChernitsaTesting {
         }
     }
 
-    class Agent {//implements Comparable<Agent> {
+    class Agent {
         public Player agent;
         public int score;
     
@@ -76,58 +78,10 @@ public class ArtemChernitsaTesting {
         return (int) (15 * exp / (15 + exp));
     }
 
-    public void conductSnowBattle(Agent a1, Agent a2) {
-        Player p1 = a1.agent;
-        Player p2 = a2.agent;
-        System.out.printf("%s, %s\n", p1.getEmail(), p2.getEmail());
-        p1.reset();
-        p2.reset();
-        int p1Snowballs = 100;
-        int p2Snowballs = 100;
-        int p1Minutes = 0;
-        int p2Minutes = 0;
-        int p1Opponent = 0;
-        int p2Opponent = 0;
-        for (int i = 1; i <= 60; i++) {
-            int p1OpponentTemp = p1.shootToOpponentField(p2Opponent, p1Snowballs, p1Minutes);
-            int p1HotTemp = p1.shootToHotField(p2Opponent, p1Snowballs, p1Minutes);
-            // System.out.printf("Round %d - hot = %d, opponent = %d, snowballs = %d\n", i, p1HotTemp, p1OpponentTemp, p1Snowballs);
-
-            if (p1HotTemp + p1OpponentTemp > maxSnowballsPerMinute(p1Minutes))
-                System.out.println("Error");
-
-            if (p1HotTemp > 0 || p1OpponentTemp > 0)
-                p1Minutes = 0;
-            p1Snowballs = p1Snowballs - p1HotTemp - p1OpponentTemp;
-
-            int p2OpponentTemp = p2.shootToOpponentField(p1Opponent, p2Snowballs, p2Minutes);
-            int p2HotTemp = p2.shootToHotField(p1Opponent, p2Snowballs, p2Minutes);
-
-            if (p2HotTemp + p2OpponentTemp > maxSnowballsPerMinute(p2Minutes))
-                System.out.println("Error");
-
-            if (p2HotTemp > 0 || p2OpponentTemp > 0)
-                p2Minutes = 0;
-            p2Snowballs = p2Snowballs - p2HotTemp - p2OpponentTemp;
-
-            p1Opponent = p1OpponentTemp;
-            p2Opponent = p2OpponentTemp;
-
-            p1Snowballs += p2Opponent;
-            p2Snowballs += p1Opponent;
-
-            p1Minutes++;
-            p2Minutes++;
-            p1Snowballs++;
-            p2Snowballs++;
-        }
-
-        a1.score += p1Snowballs;
-        a2.score += p2Snowballs;
-
-       System.out.printf("Player %s snowballs - %d, Player %s snowballs - %d\n", p1.getEmail(), p1Snowballs, p2.getEmail(), p2Snowballs);
-    }
-
+    /*
+     * Play match between two agents.
+     * Sixty rounds, results accumulated in agent's fields.
+     */
     public void playMatch(Agent alhs, Agent arhs) {
         Player playerOne = alhs.agent;
         int playerOneOpponent = 0;
@@ -142,10 +96,6 @@ public class ArtemChernitsaTesting {
         for (int i = 1; i <= 60; i++) {
             int playerOneOpponentNext = playerOne.shootToOpponentField(playerTwoOpponent, playerOneSnowballs, playerOneMinutesPassed);
             int playerOneHotNext = playerOne.shootToHotField(playerTwoOpponent, playerOneSnowballs, playerOneMinutesPassed);
-            System.out.printf("Round %d - hot = %d, opponent = %d, snowballs = %d\n", i, playerOneHotNext, playerOneOpponentNext, playerOneSnowballs);
-
-            if (playerOneHotNext + playerOneOpponentNext > maxSnowballsPerMinute(playerOneMinutesPassed))
-                System.out.println("Error");
 
             if (playerOneHotNext > 0 || playerOneOpponentNext > 0)
                 playerOneMinutesPassed = 0;
@@ -153,10 +103,6 @@ public class ArtemChernitsaTesting {
 
             int playerTwoOpponentNext = playerTwo.shootToOpponentField(playerOneOpponent, playerTwoSnowballs, playerTwoMinutesPassed);
             int playerTwoHotNext = playerTwo.shootToHotField(playerOneOpponent, playerTwoSnowballs, playerTwoMinutesPassed);
-            System.out.printf("Round %d - hot = %d, opponent = %d, snowballs = %d\n", i, playerTwoHotNext, playerTwoOpponentNext, playerTwoSnowballs);
-
-            if (playerTwoHotNext + playerTwoOpponentNext > maxSnowballsPerMinute(playerTwoMinutesPassed))
-                System.out.println("Error");
 
             if (playerTwoHotNext > 0 || playerTwoOpponentNext > 0)
                 playerTwoMinutesPassed = 0;
@@ -228,7 +174,7 @@ class OptimalAgent implements Player {
             this.opponentHits += 2;
         }
 
-        if ((this.opponentHits > 0 && snowballsToThrow > 0)) { //|| this.time == 60) {
+        if ((this.opponentHits > 0 && snowballsToThrow > 0) || this.time == 60) {
             this.shootToOpponentNumber = snowballsToThrow;
             this.opponentHits -= 1;
         }

@@ -34,8 +34,6 @@ public class ArtemChernitsaCode implements Player {
 
         if (!
             (this.time == 4 && minutesPassedAfterYourShot == 3 || 
-            // this.time == 57 && minutesPassedAfterYourShot == 5 ||
-            // this.time != 56 && minutesPassedAfterYourShot == 4 ||
             minutesPassedAfterYourShot == 4 ||
             this.time == 60
             )
