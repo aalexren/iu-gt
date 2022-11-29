@@ -1,7 +1,9 @@
-package gametheory.snowball;
+package gametheory.snowball.students2022;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import gametheory.snowball.Player;
 
 public class ArtemChernitsaTesting {
     

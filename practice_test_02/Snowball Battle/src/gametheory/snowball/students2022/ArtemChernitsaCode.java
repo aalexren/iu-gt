@@ -1,4 +1,6 @@
-package gametheory.snowball;
+package gametheory.snowball.students2022;
+
+import gametheory.snowball.Player;
 
 public class ArtemChernitsaCode implements Player {
 

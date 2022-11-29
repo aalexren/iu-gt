@@ -1,6 +1,6 @@
-import gametheory.snowball.ArtemChernitsaCode;
-import gametheory.snowball.ArtemChernitsaTesting;
 import gametheory.snowball.Player;
+// import gametheory.snowball.students2022.ArtemChernitsaCode;
+import gametheory.snowball.students2022.ArtemChernitsaTesting;
 
 class Agent implements Comparable<Agent> {
     public Player agent;
