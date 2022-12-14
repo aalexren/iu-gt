@@ -136,14 +136,33 @@ $$
     3:-3 & 0:0
 \end{bmatrix}
 $$
-Now let's check for the presence of Nash equilibrium positions in pure strategies, since each Nash equilibrium in pure strategies is also an equilibrium in mixed strategies (according to topic 3, page 31th). To find it I should check if matrix follows minmax property (topic 2, page 35th): $\underset{S_B}{min}\, \underset{S_A}{max}\, G_{S_AS_B} = \underset{S_A}{max}\, \underset{S_B}{min}\, G_{S_AS_B}$. Also, let's present matrix in shortened form: 
+So, continue elimination:
+\begin{itemize}
+    \item $A1$ dominates $A2$ since $\pi_A(A1, B1) = 9 > \pi_A(A2, B1) = 3$ and $\pi_A(A1, B2) = 20 > \pi_A(A2, B2) = 0$.
+\end{itemize}
 $$
 \begin{bmatrix}
-    9 & 20 \\
-    3 & 0
+    9:-9 & 20:-20
 \end{bmatrix}
 $$
-So, $\underset{S_B}{min}\, \underset{S_A}{max}\, G_{S_AS_B} = 9$, $\underset{S_A}{max}\, \underset{S_B}{min}\, G_{S_AS_B} = 9$. As I see there is Nash equilibrium $(A1,B1)$, meaning I can skip checking it in mixed strategies.
+Then, last step:
+\begin{itemize}
+    \item $B1$ dominates $B2$ since $\pi_B(A1, B1) = -9 > \pi_B(A1, B2) = -20$.
+\end{itemize}
+$$
+\begin{bmatrix}
+    9:-9
+\end{bmatrix}
+$$
+Hence as I see there is Nash equilibrium $(A1,B1)$, meaning I can skip checking it in mixed strategies.
+% Now let's check for the presence of Nash equilibrium positions in pure strategies, since each Nash equilibrium in pure strategies is also an equilibrium in mixed strategies (according to topic 3, page 31th). To find it I should check if matrix follows minmax property (topic 2, page 35th): $\underset{S_B}{min}\, \underset{S_A}{max}\, G_{S_AS_B} = \underset{S_A}{max}\, \underset{S_B}{min}\, G_{S_AS_B}$. Also, let's present matrix in shortened form: 
+% $$
+% \begin{bmatrix}
+%     9 & 20 \\
+%     3 & 0
+% \end{bmatrix}
+% $$
+% So, $\underset{S_B}{min}\, \underset{S_A}{max}\, G_{S_AS_B} = 9$, $\underset{S_A}{max}\, \underset{S_B}{min}\, G_{S_AS_B} = 9$. As I see there is Nash equilibrium $(A1,B1)$, meaning I can skip checking it in mixed strategies.
 
 \subsection{Answer}\label{answer01}
 \begin{itemize}
