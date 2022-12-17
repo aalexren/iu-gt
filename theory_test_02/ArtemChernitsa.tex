@@ -116,6 +116,8 @@ cell contains vector of individual payoffs.
     \item[Strict domination (topic 2, page 43th):] For any player $X$ in $(A, B, ...)$, for any two strategies $s'_X$ and $s''_X$ let us say that $s'_X$ strictly dominates $s''_X$ if $\pi_X(S_{X:s'_X}) >  \pi_X(S_{X:s''_X})$ for every play $S$.
     \item[Elimination of dominated strategy (topic 2, page 44th):] Let $G$ be a game in the normal form of players $A, B, ...$, $X$ be a player in $A, B, ...$, with a strategy $s_X$ dominated by some another strategy of the player. Then a game $G(X\backslash s_X)$ resulting from $G$ by elimination (prohibition) of the strategy $s_X$ for $X$ has the same set of Nash equilibria as $G$.
     \item[Probabilities (topic 3, page 5th):] Every pure strategy is a mixed strategy in which this pure strategy is chosen with probability 1, and all others – with probability 0.
+    \item[Remark 1:] A strictly dominated strategy is not used with positive probability in any mixed strategy equilibrium. This means that when we are looking for mixed strategy equilibria, we can eliminate from consideration all strictly dominated strategies \autocite{branislav}.
+    \item[Remark 2:] According to Remark 1, for the following tasks it means we can assume equivalence of elimination of all dominated mixed strategies for game in mixed strategies and elimination of strictly dominated strategies for game in pure strategies.
 \end{description}\hspace{2pt}
 
 Thus it could be represented as zero-sum game of two players in the normal form. Let first player will be A, and the second is B.
@@ -157,7 +159,7 @@ $$
     9:-9
 \end{bmatrix}
 $$
-Hence as I see there is Nash equilibrium $(A1,B1)$, meaning I can skip checking it in mixed strategies.
+Hence as I see there is Nash equilibrium $(A1,B1)$, meaning I can skip checking it in mixed strategies (according to the remark 1 and 2).
 % Now let's check for the presence of Nash equilibrium positions in pure strategies, since each Nash equilibrium in pure strategies is also an equilibrium in mixed strategies (according to topic 3, page 31th). To find it I should check if matrix follows minmax property (topic 2, page 35th): $\underset{S_B}{min}\, \underset{S_A}{max}\, G_{S_AS_B} = \underset{S_A}{max}\, \underset{S_B}{min}\, G_{S_AS_B}$. Also, let's present matrix in shortened form: 
 % $$
 % \begin{bmatrix}
@@ -353,7 +355,8 @@ Meaning that $(A2, B1)$ is Nash equilibrium (w.r.t. \ref{solution01}). This is s
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-% \printbibliography % Output the bibliography
+\printbibliography % Output the bibliography
+
 
 %----------------------------------------------------------------------------------------
 
